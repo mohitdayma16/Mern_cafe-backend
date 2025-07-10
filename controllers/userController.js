@@ -103,6 +103,8 @@ const showone  = async(req,res)=>{
     
   }
 }
+
+
 export {register,login,update, showuser , updateuser, deleteuser, showone}
 
 //user controller
