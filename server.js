@@ -1,21 +1,31 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+import userRouter from "./routes/userRoute.js";
+import productRouter from "./routes/productRoute.js";
 import cors from "cors";
-import userRouter from "./routes/userRoutes.js"
+dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 const dbuser = encodeURIComponent(process.env.DBUSER);
 const dbpass = encodeURIComponent(process.env.DBPASS);
 
-mongoose.connect(`mongodb+srv://mohitdayma164:gcRtBaG746ycpwOG@cluster0.mosbnju.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`).then(()=>{
-    app.listen(8080,()=>{
-        console.log("server started");
-        
-    });
+mongoose.connect(`mongodb+srv://${dbuser}:${dbpass}@cluster0.mosbnju.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`).then(() => {
+  app.listen(8080, () => {
+    console.log("Server started");
+  });
 });
 
-app.use("/api/user",userRouter);
+// mongoose
+//   .connect(
+//     `mongodb+srv://${dbuser}:${dbpass}@cluster0.qjxhv.mongodb.net/merncafe?retryWrites=true&w=majority&appName=Cluster0`
+//   )
+//   .then(() => {
+//     app.listen(8080, () => {
+//       console.log("Server started");
+//     });
+//   });
 
-//server
+app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
